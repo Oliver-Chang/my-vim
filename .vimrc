@@ -28,11 +28,27 @@ map <F2> :NERDTreeToggle<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 
+" syntastic
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+" python flake8
+let g:syntastic_python_checkers = ['flake8']
+
+
 
 " My config 
 " 语法高亮
 syntax enable
 syntax on
 filetype plugin indent on
-autocmd FileType c,cpp set shiftwidth=8 | set expandtab 
+set smartindent 
+set sw=4
+set ts=4
+autocmd FileType python setlocal et sta sw=4 sts=4
 
