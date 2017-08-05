@@ -26,6 +26,7 @@ autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in
 map <F2> :NERDTreeToggle<CR>
 " 当只有 NERDTree 窗口时关闭 vim
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+let g:NERDTreeWinSize=20
 
 
 " syntastic
