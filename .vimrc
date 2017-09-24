@@ -9,8 +9,8 @@ autocmd FileType python setlocal et sta sw=4 sts=4
 let mapleader = "\<Space>"
 
 
-:nnoremap <leader>ev :vsplit $MYVIMRC<cr>
-:nnoremap <leader>sv :source $MYVIMRC<cr>
+nnoremap <leader>ev :vsplit $MYVIMRC<cr>
+nnoremap <leader>sv :source $MYVIMRC<cr>
 
 
 
@@ -67,23 +67,26 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#tab_nr_type = 1 " tab number
 let g:airline#extensions#tabline#show_tab_nr = 1
 let g:airline#extensions#tabline#formatter = 'default'
-let g:airline#extensions#tabline#buffer_nr_show = 0
 let g:airline#extensions#tabline#fnametruncate = 16
 let g:airline#extensions#tabline#fnamecollapse = 2
-let g:airline#extensions#tabline#buffer_idx_mode = 1
-nnoremap <C-n> :bn<CR>
-nnoremap <C-p> :bp<CR>
+let g:airline#extensions#tabline#buffer_nr_show = 1
+map <C-l> :bn<CR>
+map <C-h> :bp<CR>
+map <C-\> :bd<CR>
+
 
 
 " NERDTree
 " 使用 vim 打开目录自动打开 NERDTree
-autocmd StdinReadPre * let s:std_in=1
+" let g:nerdtree_tabs_open_on_console_startup=1
+" autocmd StdinReadPre * let s:std_in=1
 " 自动关闭
-autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
+" let g:nerdtree_tabs_autoclose=0
+" autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
 " 映射 F2 隐藏显示 NERDTree
-map <F2> :NERDTreeToggle<CR>
+map <F2> :NERDTreeTabsToggle<CR>
 " 当只有 NERDTree 窗口时关闭 vim
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+" autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 " 宽度
 let g:NERDTreeWinSize=20
 " 自动打开 NERDTree
@@ -92,6 +95,10 @@ let g:NERDTreeWinSize=20
 " let NERDTreeWinPos="right"
 " 打开新的buffer时自动定位到编辑窗口
 " autocmd VimEnter * wincmd p
+let NERDTreeShowBookmarks=1
+let NERDTreeQuitOnOpen = 1
+let g:NERDTreeShowHidden = 1
+
 
 
 " tagbar
@@ -110,39 +117,13 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
+map <F4> :SyntasticToggleMode<CR>
 
 
-" python flake8
+" Python flake8
 let g:syntastic_python_checkers = ['flake8']
 
 
 
+autocmd BufDelete * call airline#extensions#tabline#buflist#invalidate()
 
-
-function! te#utils#tab_buf_switch(num) abort
-    if exists('g:feat_enable_airline') && g:feat_enable_airline == 1
-        execute 'normal '."\<Plug>AirlineSelectTab".a:num
-    else
-        if exists( '*tabpagenr' ) && tabpagenr('$') != 1
-            " Tab support && tabs open
-            execute 'normal '.a:num.'gt'
-        else
-            let l:temp=a:num
-            let l:buf_index=a:num
-            let l:buf_count=len(filter(range(1,bufnr('$')), 'buflisted(v:val)'))
-            if l:temp > l:buf_count
-                return
-            endif
-            while l:buf_index != 0
-                while !buflisted(l:temp)
-                    let l:temp += 1
-                endw
-            let l:buf_index -= 1
-            if l:buf_index != 0
-                let l:temp += 1
-            endif
-        endw
-        execute ':'.l:temp.'b'
-    endif
-endif
-endfunction
