@@ -124,6 +124,29 @@ map <F4> :SyntasticToggleMode<CR>
 let g:syntastic_python_checkers = ['flake8']
 
 
-
-autocmd BufDelete * call airline#extensions#tabline#buflist#invalidate()
-
+" Cscope 设置
+if has("cscope")
+    set csprg=/usr/bin/cscope   " 指定用来执行cscope的命令
+    set csto=0                  " 设置cstag命令查找次序：0先找cscope数据库再找标签文件；1先找标签文件再找cscope数据库"
+    set cst                     " 同时搜索cscope数据库和标签文件"
+    set cscopequickfix=s-,c-,d-,i-,t-,e-    " 使用QuickFix窗口来显示cscope查找结果"
+    set nocsverb
+    if filereadable("cscope.out")    " 若当前目录下存在cscope数据库，添加该数据库到vim
+        cs add cscope.out
+    elseif $CSCOPE_DB != ""            " 否则只要环境变量CSCOPE_DB不为空，则添加其指定的数据库到vim
+        cs add $CSCOPE_DB
+    endif
+    set csverb
+endif
+map <F5> :!cscope -Rbq<CR>:cs add ./cscope.out .<CR><CR><CR> :cs reset<CR>
+"对:cs find c等Cscope查找命令进行映射
+nmap <leader>s :cs find s <C-R>=expand("<cword>")<CR><CR> :copen<CR><CR>
+nmap <leader>g :cs find g <C-R>=expand("<cword>")<CR><CR>
+nmap <leader>d :cs find d <C-R>=expand("<cword>")<CR><CR> :copen<CR><CR>
+nmap <leader>c :cs find c <C-R>=expand("<cword>")<CR><CR>:copen<CR><CR>
+nmap <leader>t :cs find t <C-R>=expand("<cword>")<CR><CR>:copen<CR><CR>
+nmap <leader>e :cs find e <C-R>=expand("<cword>")<CR><CR>:copen<CR><CR>
+nmap <leader>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
+nmap <leader>i :cs find i <C-R>=expand("<cfile>")<CR><CR> :copen<CR><CR>
+"" 设定是否使用 quickfix 窗口来显示 cscope 结果
+set cscopequickfix=s-,c-,d-,i-,t-,e-
