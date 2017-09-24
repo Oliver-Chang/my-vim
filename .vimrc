@@ -8,8 +8,9 @@ set ts=4
 autocmd FileType python setlocal et sta sw=4 sts=4
 let mapleader = "\<Space>"
 
-
+" 快速打开 .vimrc
 nnoremap <leader>ev :vsplit $MYVIMRC<cr>
+" 应用 .vimrc 配置
 nnoremap <leader>sv :source $MYVIMRC<cr>
 
 
@@ -28,21 +29,21 @@ set softtabstop=4
 
 
 " 定义快捷键关闭当前分割窗口
-nmap <Leader>q :q<CR>
+" nmap <Leader>q :q<CR>
 " 定义快捷键保存当前窗口内容
-nmap <Leader>w :w<CR>
+" nmap <Leader>w :w<CR>
 " 不做任何保存，直接退出 vim
-nmap <Leader>Q :qa!<CR>
+" nmap <Leader>Q :qa!<CR>
 " 依次遍历子窗口
-nnoremap nw <C-W><C-W>
+" nnoremap nw <C-W><C-W>
 " 跳转至右方的窗口
-nnoremap <Leader>lw <C-W>l
+" nnoremap <Leader>lw <C-W>l
 " 跳转至左方的窗口
-nnoremap <Leader>hw <C-W>h
+" nnoremap <Leader>hw <C-W>h
 " 跳转至上方的子窗口
-nnoremap <Leader>kw <C-W>k
+" nnoremap <Leader>kw <C-W>k
 " 跳转至下方的子窗口
-nnoremap <Leader>jw <C-W>j
+" nnoremap <Leader>jw <C-W>j
 
 
 " Pathogen 
@@ -72,32 +73,17 @@ let g:airline#extensions#tabline#fnamecollapse = 2
 let g:airline#extensions#tabline#buffer_nr_show = 1
 map <C-l> :bn<CR>
 map <C-h> :bp<CR>
-map <C-\> :bd<CR>
+map <C-c> :BD<CR>
 
 
 
 " NERDTree
-" 使用 vim 打开目录自动打开 NERDTree
-" let g:nerdtree_tabs_open_on_console_startup=1
-" autocmd StdinReadPre * let s:std_in=1
-" 自动关闭
-" let g:nerdtree_tabs_autoclose=0
-" autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
 " 映射 F2 隐藏显示 NERDTree
 map <F2> :NERDTreeTabsToggle<CR>
-" 当只有 NERDTree 窗口时关闭 vim
-" autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 " 宽度
 let g:NERDTreeWinSize=20
-" 自动打开 NERDTree
-" autocmd vimenter * NERDTree
-" 将 NERDTree 的窗口设置在 vim 窗口的右侧（默认为左侧）
-" let NERDTreeWinPos="right"
-" 打开新的buffer时自动定位到编辑窗口
-" autocmd VimEnter * wincmd p
-let NERDTreeShowBookmarks=1
-let NERDTreeQuitOnOpen = 1
-let g:NERDTreeShowHidden = 1
+" 打开目录时显示在左侧
+let g:nerdtree_tabs_open_on_console_startup = 2
 
 
 
@@ -110,18 +96,44 @@ let g:tagbar_autofocus = 1
 
 
 " syntastic
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-map <F4> :SyntasticToggleMode<CR>
+" execute pathogen#infect()
+" set statusline+=%#warningmsg#
+" set statusline+=%{SyntasticStatuslineFlag()}
+" set statusline+=%*
+" 每次自动调用 :SyntasticSetLocList, 将错误覆盖 **quickfix**
+" let g:syntastic_always_populate_loc_list = 1
+" 自动拉起/关闭错误窗口, 不需要手动调用 :Errors
+" let g:syntastic_auto_loc_list = 1
+" let g:syntastic_check_on_open = 1
+" let g:syntastic_check_on_wq = 1
+" map <F4> :SyntasticToggleMode<CR>
 
 
 " Python flake8
 let g:syntastic_python_checkers = ['flake8']
+
+
+" ctrlp
+let g:ctrlp_map = '<leader>p'
+let g:ctrlp_cmd = 'CtrlP'
+map <leader>f :CtrlPMixed<CR>
+let g:ctrlp_custom_ignore = {
+    \ 'dir':  '\v[\/]\.(git|hg|svn|rvm)$',
+    \ 'file': '\v\.(exe|so|dll|zip|tar|tar.gz|pyc)$',
+    \ }
+let g:ctrlp_working_path_mode=0
+let g:ctrlp_match_window_bottom=1
+let g:ctrlp_max_height=15
+let g:ctrlp_match_window_reversed=0
+let g:ctrlp_mruf_max=500
+let g:ctrlp_follow_symlinks=1
+
+
+" ack.vim
+nnoremap <Leader>a :Ack<space>
+if executable('ag')
+    let g:ackprg = 'ag --vimgrep'
+endif
 
 
 " Cscope 设置
