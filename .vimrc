@@ -13,6 +13,10 @@ nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 " 应用 .vimrc 配置
 nnoremap <leader>sv :source $MYVIMRC<cr>
 
+" 大小写转换
+nnoremap gu gU
+nnoremap gl gu
+
 
 
 
@@ -71,6 +75,9 @@ let g:airline#extensions#tabline#formatter = 'default'
 let g:airline#extensions#tabline#fnametruncate = 16
 let g:airline#extensions#tabline#fnamecollapse = 2
 let g:airline#extensions#tabline#buffer_nr_show = 1
+
+
+" vim-bufkill
 map <C-l> :bn<CR>
 map <C-h> :bp<CR>
 map <C-c> :BD<CR>
@@ -93,6 +100,7 @@ nmap <F3> :TagbarToggle<CR>
 let g:tagbar_autofocus = 1
 " 设置tagbar的宽度为30列，默认40
 " let g:tagbar_width = 30
+let g:tagbar_sort = 0 
 
 
 " syntastic
@@ -150,7 +158,10 @@ if has("cscope")
     endif
     set csverb
 endif
-map <F5> :!cscope -Rbq<CR>:cs add ./cscope.out .<CR><CR><CR> :cs reset<CR>
+" map <F5> :!cscope -Rbkq<CR>:cs add ./cscope.out .<CR><CR><CR> :cs reset<CR>
+
+map <F12> :!cscope -Rbkq<CR>
+map <F11> :cs add ./cscope.out .<CR>
 "对:cs find c等Cscope查找命令进行映射
 nmap <leader>s :cs find s <C-R>=expand("<cword>")<CR><CR> :copen<CR><CR>
 nmap <leader>g :cs find g <C-R>=expand("<cword>")<CR><CR>
@@ -158,7 +169,7 @@ nmap <leader>d :cs find d <C-R>=expand("<cword>")<CR><CR> :copen<CR><CR>
 nmap <leader>c :cs find c <C-R>=expand("<cword>")<CR><CR>:copen<CR><CR>
 nmap <leader>t :cs find t <C-R>=expand("<cword>")<CR><CR>:copen<CR><CR>
 nmap <leader>e :cs find e <C-R>=expand("<cword>")<CR><CR>:copen<CR><CR>
-nmap <leader>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
+nmap <leader>o :vert scs find f <C-R>=expand("<cfile>")<CR><CR>
 nmap <leader>i :cs find i <C-R>=expand("<cfile>")<CR><CR> :copen<CR><CR>
 "" 设定是否使用 quickfix 窗口来显示 cscope 结果
 set cscopequickfix=s-,c-,d-,i-,t-,e-
