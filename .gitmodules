@@ -52,3 +52,9 @@
 [submodule "bundle/drawit"]
 	path = bundle/drawit
 	url = https://github.com/vim-scripts/DrawIt.git
+[submodule "bundle/autoformat"]
+	path = bundle/autoformat
+	url = https://github.com/chiel92/vim-autoformat
+[submodule "bundle/delimitmate"]
+	path = bundle/delimitmate
+	url = https://github.com/Raimondi/delimitMate.git

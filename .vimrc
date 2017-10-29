@@ -104,21 +104,28 @@ let g:tagbar_sort = 0
 
 
 " syntastic
-" execute pathogen#infect()
-" set statusline+=%#warningmsg#
-" set statusline+=%{SyntasticStatuslineFlag()}
-" set statusline+=%*
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
 " 每次自动调用 :SyntasticSetLocList, 将错误覆盖 **quickfix**
-" let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_always_populate_loc_list = 1
 " 自动拉起/关闭错误窗口, 不需要手动调用 :Errors
-" let g:syntastic_auto_loc_list = 1
-" let g:syntastic_check_on_open = 1
-" let g:syntastic_check_on_wq = 1
-" map <F4> :SyntasticToggleMode<CR>
-
-
+let g:syntastic_auto_loc_list = 1
+" 自动高亮显示错误
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 1
+let g:syntastic_c_no_default_include_dirs = 1
+let g:syntastic_c_compiler_options = ''
+map <F4> :SyntasticToggleMode<CR>
 " Python flake8
 let g:syntastic_python_checkers = ['flake8']
+
+
+" autoformat
+noremap <F5> :Autoformat<CR>
+let g:autoformat_verbosemode=1
+let g:formatters_python = ['autopep8']
+let g:formatdef_autopep8 = "'autopep8 - --range '.a:firstline.' '.a:lastline"
 
 
 " ctrlp
