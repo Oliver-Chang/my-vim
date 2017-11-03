@@ -114,8 +114,7 @@ let g:syntastic_auto_loc_list = 1
 " 自动高亮显示错误
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 1
-let g:syntastic_c_no_default_include_dirs = 1
-let g:syntastic_c_compiler_options = ''
+" let g:syntastic_c_compiler_options = ''
 map <F4> :SyntasticToggleMode<CR>
 " Python flake8
 let g:syntastic_python_checkers = ['flake8']
